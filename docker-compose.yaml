@@ -1,0 +1,39 @@
+services:
+  db:
+    image: mariadb:11.4.2
+    networks:
+      tmplink:
+    ports:
+      - "33066:3306"
+    environment: &db
+      MARIADB_USER: dev
+      MARIADB_PASSWORD: dev123
+      MARIADB_DATABASE: tmplink
+      MARIADB_ROOT_PASSWORD: 'dev'
+    volumes:
+      - database_data:/var/lib/postgresql/data:rw
+
+  php:
+    image: richeenektar/tmplink:latest
+    networks:
+      tmplink:
+    ports:
+      - "8000:80"
+    environment:
+      <<: *db
+      DB_HOST: db
+      APP_ENV: prod
+      APP_SECRET: dc3313180c2bf48064d452fc2d8fe287
+
+      LINK_HOST: localhost:8000
+      # {id} will be replaced with the id of the movie
+      # {host} will be replaced with LINK_HOST
+      LINK_TEMPLATE: "https://{host}/Items/{id}/Download?api_key=xxx"
+      LINK_LIFETIME: 10800 # 3 hours in seconds
+    depends_on:
+      - db
+
+networks:
+  tmplink:
+volumes:
+  database_data:
