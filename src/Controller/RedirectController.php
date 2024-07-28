@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Redirect;
 use App\Repository\RedirectRepository;
-use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

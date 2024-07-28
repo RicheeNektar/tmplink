@@ -1,4 +1,8 @@
 #!/bin/bash
 
 docker build -t richeenektar/tmplink:latest -f Dockerfile ./
-docker push richeenektar/tmplink:latest
+
+if [[ $1 == "prod" ]]
+then
+  docker push richeenektar/tmplink:latest
+fi
